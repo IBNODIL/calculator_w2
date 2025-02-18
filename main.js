@@ -47,10 +47,12 @@ dotBtn.addEventListener('click', () => {
   if (isSecond && secondNumber.length > 0 && !haveDot) {
     secondNumber = secondNumber + '.'
     haveDot = true;
+    answerBox.textContent = secondNumber
     console.log(secondNumber)
-  } else if (!isSecond && firstNumber.length > 0 && !haveDot) {
+  } else if (firstNumber.length > 0 && !haveDot) {
     firstNumber = firstNumber + '.'
     haveDot = true;
+    answerBox.textContent = firstNumber
     console.log(firstNumber)
   }
 })
@@ -66,6 +68,7 @@ deleteBtn.addEventListener('click', () => {
     }
 
     secondNumber = returningSecondNumber.join('')
+    answerBox.textContent = secondNumber
     console.log(secondNumber)
   } else {
     firstNumber = firstNumber.split('')
@@ -78,6 +81,7 @@ deleteBtn.addEventListener('click', () => {
     }
 
     firstNumber = returningFirstNumber.join('')
+    answerBox.textContent = firstNumber
     console.log(firstNumber)
   }
 })
@@ -113,6 +117,8 @@ function thisCalculatingSign(sign) {
     calculatingSign = `${sign}`;
     console.log(calculatingSign);
     isSecond = true;
+    haveDot = false;
+    isFirstZero = true;
   }
 }
 
