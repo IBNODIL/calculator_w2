@@ -2,23 +2,8 @@ let answerBox = document.getElementById('answer')
 
 let deleteBtn = document.getElementById('delete')
 let clearBtn = document.getElementById('clear');
-let divideBtn = document.getElementById('divide');
-let multipleBtn = document.getElementById('multiple');
-let minusBtn = document.getElementById('minus');
-let plusBtn = document.getElementById('plus');
 let dotBtn = document.getElementById('dot');
 let equalsBtn = document.getElementById('equals');
-let doubleZeroBtn = document.getElementById('double-zero');
-let zeroBtn = document.getElementById('zero');
-let oneBtn = document.getElementById('one');
-let twoBtn = document.getElementById('two');
-let threeBtn = document.getElementById('three');
-let fourBtn = document.getElementById('four');
-let fiveBtn = document.getElementById('five');
-let sixBtn = document.getElementById('six');
-let sevenBtn = document.getElementById('seven');
-let eightBtn = document.getElementById('eight');
-let nineBtn = document.getElementById('nine');
 
 let firstNumber = '0';
 let secondNumber = '0';
@@ -28,21 +13,6 @@ let isSecond = false;
 let haveDot = false;
 let isFirstZero = true;
 
-oneBtn.addEventListener('click', () => addNumber('1'))
-twoBtn.addEventListener('click', () => addNumber('2'))
-threeBtn.addEventListener('click', () => addNumber('3'))
-fourBtn.addEventListener('click', () => addNumber('4'))
-fiveBtn.addEventListener('click', () => addNumber('5'))
-sixBtn.addEventListener('click', () => addNumber('6'))
-sevenBtn.addEventListener('click', () => addNumber('7'))
-eightBtn.addEventListener('click', () => addNumber('8'))
-nineBtn.addEventListener('click', () => addNumber('9'))
-zeroBtn.addEventListener('click', () => addNumber('0'))
-doubleZeroBtn.addEventListener('click', () => addNumber('00'))
-plusBtn.addEventListener('click', () => thisCalculatingSign('+'))
-minusBtn.addEventListener('click', () => thisCalculatingSign('-'))
-multipleBtn.addEventListener('click', () => thisCalculatingSign('*'))
-divideBtn.addEventListener('click', () => thisCalculatingSign('/'))
 dotBtn.addEventListener('click', () => {
   if (isSecond && secondNumber.length > 0 && !haveDot) {
     secondNumber = secondNumber + '.'
@@ -69,6 +39,12 @@ deleteBtn.addEventListener('click', () => {
 
     secondNumber = returningSecondNumber.join('')
     answerBox.textContent = secondNumber
+
+    if(secondNumber.length == 0){
+      isFirstZero = true;
+      answerBox.textContent = '0'
+    }
+
     console.log(secondNumber)
   } else {
     firstNumber = firstNumber.split('')
@@ -82,6 +58,12 @@ deleteBtn.addEventListener('click', () => {
 
     firstNumber = returningFirstNumber.join('')
     answerBox.textContent = firstNumber
+
+    if(firstNumber.length == 0){
+      answerBox.textContent = '0'
+      isFirstZero = true;
+    }
+
     console.log(firstNumber)
   }
 })
@@ -89,6 +71,7 @@ clearBtn.addEventListener('click', () => {
   firstNumber = '0'
   secondNumber = '0'
   isSecond = false
+  isFirstZero = true
   answerBox.textContent = '0'
 
   console.log(firstNumber)
@@ -110,6 +93,7 @@ equalsBtn.addEventListener('click', () => {
     answerBox.textContent = Number(firstNumber) / Number(secondNumber)
     console.log(answerBox.textContent)
   }
+  isFirstZero = true;
 })
 
 function thisCalculatingSign(sign) {
@@ -122,21 +106,29 @@ function thisCalculatingSign(sign) {
   }
 }
 
-function addNumber(num) {
+function addNumberToInput(num) {
   if (num == '0' && isFirstZero) {
     return
   } else if ((num == '00' && isFirstZero)) {
     return
   } else {
     if (isSecond) {
-      lastNumber = num;
-      secondNumber = secondNumber + num
+      if (isFirstZero) {
+        lastNumber = num;
+        secondNumber = num
+      } else {
+        secondNumber = secondNumber + num
+      }
       isFirstZero = false
       answerBox.textContent = secondNumber
       console.log(secondNumber)
     } else {
-      lastNumber = num;
-      firstNumber = firstNumber + num
+      if (isFirstZero) {
+        lastNumber = num;
+        firstNumber = num
+      } else {
+        firstNumber = firstNumber + num
+      }
       isFirstZero = false
       answerBox.textContent = firstNumber
       console.log(firstNumber)
